@@ -1,0 +1,15 @@
+{
+  "customers": 4297,
+  "orders": 17754,
+  "one_time": 1538,
+  "mature": 3324,
+  "repeat90": 1577,
+  "median_days": 49.98125,
+  "gross": 8393215.114,
+  "refunds": -435655.68,
+  "top10": 0.5964829558338204,
+  "missing_lines": 127216,
+  "lines": 516384,
+  "refund_only": -10408.290000000969,
+  "source_sha256": "43465a06f2ccf7c8b5bd2892bc7defb52f97487934fe93b16ae4c3936424676d"
+}

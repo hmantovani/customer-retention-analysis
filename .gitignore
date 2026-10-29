@@ -1,0 +1,6 @@
+# Local data and reproducible outputs
+/data/
+/output/analysis.sqlite
+.venv/
+__pycache__/
+*.pyc
