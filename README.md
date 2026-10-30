@@ -1,6 +1,6 @@
 # Customer retention & revenue | portfolio case study
 
-Open [report.html](report.html) in a browser for the decision brief. This is an analysis of real historical transactions, not synthetic data. The audience is sales and finance: the aim is to identify questions for investigation and experiments, not estimate causal effects or predict churn.
+Explore the [live interactive demo](https://hmantovani.github.io/customer-retention-analysis/) or open [index.html](index.html) locally or [report.html](report.html) for the decision brief. This is an analysis of real historical transactions, not synthetic data. The audience is sales and finance: the aim is to identify questions for investigation and experiments, not estimate causal effects or predict churn.
 
 ## Data choice and provenance
 
@@ -30,6 +30,7 @@ New-Item -ItemType Directory -Force data | Out-Null
 Invoke-WebRequest 'https://archive.ics.uci.edu/static/public/352/online+retail.zip' -OutFile data/source.zip
 Expand-Archive data/source.zip -DestinationPath data -Force
 python src/analyze.py
+python src/build_demo.py
 python -m unittest discover -s tests -v
 ```
 
@@ -38,3 +39,9 @@ The pipeline creates `report.html`, `output/summary.json`, monthly/cohort CSVs a
 ## Acceptance and validation
 
 The report must include repeat purchase, cohort activity, time to second order, revenue concentration and monthly activity, plus business questions and caveats. One-time buyers, missing histories, refunds and cohort maturity must remain explicit. A deterministic fixture tests order sequencing, anonymous records, refund exclusion, cutoff and immature cohort masking; SQL checks the 90-day and monthly aggregates independently. Source values are historical observations and should not be presented as causal effects. The data lack margin, marketing exposure and identifiers for anonymous shoppers.
+
+## Interactive demo and GitHub Pages
+
+The demo is a static, self-contained `index.html`: it embeds aggregates from `output/summary.json`, `output/monthly.csv`, `output/cohorts.csv`, and the locally generated SQLite orders table. `python src/build_demo.py` regenerates it after `python src/analyze.py`. Cohort sizes and the order-count distribution are aggregated from the same orders table; no individual customer records are embedded. Both pages work locally without a server. The data are a fixed historical snapshot and do not update automatically.
+
+To publish, commit and push `index.html`, `report.html`, the source files and aggregate outputs to the repository. In GitHub repository **Settings → Pages**, select **Deploy from a branch**, choose `main` and `/ (root)`, and save. GitHub will provide the Pages URL once built. This project is not currently configured for automatic data refresh. Re-run both scripts and commit the resulting files to change the published snapshot. The project-hub `.project/` records, source download, and local SQLite database should remain excluded from the remote repository.
